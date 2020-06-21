@@ -1,6 +1,7 @@
 # HappyHouse
 
 ## Project
+### 김순빈 윤지원
 
 ![슬라이드1](https://user-images.githubusercontent.com/19357410/85229186-6df74c80-b423-11ea-915d-fb2add2b7b28.JPG)
 ![슬라이드2](https://user-images.githubusercontent.com/19357410/85229190-6f287980-b423-11ea-9891-50c133c8be5a.JPG)
