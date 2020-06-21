@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.ssafy.happyhouse.mapper.UserMapper">
+	
+	<!-- user insert -->
+	<insert id="userInsert" parameterType="com.ssafy.happyhouse.model.dto.User">
+		insert into user (uid, uname, uaddress, uphone, upassword, uquestion, uanswer)
+		values (#{uid}, #{uname}, #{uaddress}, #{uphone}, #{upassword}, #{uquestion}, #{uanswer})
+	</insert>
+
+	<!-- user update -->	
+	<update id="userUpdate" parameterType="com.ssafy.happyhouse.model.dto.User">
+		update user set
+		 	uaddress = #{uaddress},
+		 	uphone = #{uphone},
+		 	upassword = #{upassword},
+		 	uquestion = #{uquestion},
+		 	uanswer = #{uanswer}
+		where uid = #{uid}
+	</update>
+	
+	<!-- user delete -->
+	<delete id="userDelete" parameterType="string">
+		delete from user where uid = #{uid}
+	</delete>
+
+	<!-- user interesting area select -->
+	<select id="getInteresting" parameterType="string" resultType="string">
+		select dong from interestarea WHERE uid = #{uid}
+	</select>
+	 
+	<!-- user interesting area insert -->
+	<insert id="setInteresting" parameterType="map">
+		<if test="#{how}!=1">
+			INSERT INTO interestarea (dong, uid)
+			VALUES ( #{dong}, #{uid} )
+		</if>
+	</insert>
+	
+	<!-- user Id search -->
+	<select id="userIdSearch" parameterType="map" resultType="com.ssafy.happyhouse.model.dto.User">
+		SELECT uid, uname, uPhone FROM USER WHERE uname = #{uname} AND uPhone = #{uphone}
+	</select>
+	
+	<!-- user Pw search -->
+	<select id="userPWSearch" parameterType="map" resultType="com.ssafy.happyhouse.model.dto.User">
+		SELECT uid, upassword, uPhone FROM USER WHERE uid = #{uid} AND uname = #{uname} AND uPhone = #{uphone}
+	</select>
+	
+	<!-- login -->
+	<select id="logIn" parameterType="map" resultType="com.ssafy.happyhouse.model.dto.User">
+		SELECT * FROM USER WHERE uid = #{uid} and upassword = #{upassword} 
+	</select>
+	
+	<!--  -->
+	<delete id="inteDelete" parameterType="string">
+		delete from interestarea where uid=#{uid}
+	</delete>
+	
+	<!-- 찜목록 들고오기 -->
+	<select id="getInterestHouseDeal" parameterType="string" resultType="com.ssafy.happyhouse.model.dto.InterestHouseDeal">
+		select * from interesthousedeal where uid = #{uid}
+	</select>
+	
+	<!-- 찜목록 추가하기 -->
+	<insert id="insertInterestHouseDeal" parameterType="map">
+		insert into interesthousedeal (uid, no)
+		values (#{uid}, #{no})
+	</insert>
+	
+	<!-- 찜목록 삭제하기 -->
+	<delete id="deleteInterestHouseDeal" parameterType="map">
+		delete from interesthousedeal where uid=#{uid} and no=#{no}
+	</delete>
+	
+</mapper>

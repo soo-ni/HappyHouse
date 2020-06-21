@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.ssafy.happyhouse.mapper.HouseInfoMapper">
+	<select id="searchAllHouseInfo" resultType="com.ssafy.happyhouse.model.dto.HouseInfo">
+		select no "no",dong "dong",aptname "AptName",code "code",buildyear "buildYear",jibun "jibun" from houseinfo 
+	</select>
+	
+	<select id="search" parameterType="int" resultType="com.ssafy.happyhouse.model.dto.HouseInfo">
+		select no "no",dong "dong",aptname "AptName",code "code",buildyear "buildYear",jibun "jibun"  from houseinfo where no =#{no}
+	</select>
+	
+	<select id="searchAptName" parameterType="string" resultType="com.ssafy.happyhouse.model.dto.HouseInfo">
+		select  no ,dong ,AptName ,code ,buildYear ,jibun  from houseinfo where AptName LIKE CONCAT('%',#{aptname},'%')
+	</select>
+	
+	
+</mapper>
+
+
+<!--hi  -->
+<!-- private int    no; -->
+<!-- 	/**법정 동명 */ -->
+<!-- 	private String dong; -->
+<!-- 	/**아파트 이름 */ -->
+<!-- 	private String AptName; -->
+<!-- 	/**법정 동코드 */ -->
+<!-- 	private int code; -->
+<!-- 	/**건축 연도*/ -->
+<!-- 	private int buildYear; -->
+<!-- 	/**지번*/ -->
+<!-- 	private String jibun; -->
+<!-- 	/** */ -->
+<!-- 	private String lat; -->
+<!-- 	private String lng; -->
+	
+<!-- 	/**이미지 경로*/ -->
+<!-- 	protected String img; -->

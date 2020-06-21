@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.ssafy.happyhouse.mapper.StoreInfoMapper">
+
+	<!-- 모든 상권정보 리스트 -->
+	<select id="searchAllStoreInfo" resultType="com.ssafy.happyhouse.model.dto.StoreInfo">
+		select * from StoreInfo limit 10
+	</select>
+
+	<!-- 상권 정보 추가 -->
+	<insert id="insertStoreInfo" parameterType="com.ssafy.happyhouse.model.dto.StoreInfo">
+		INSERT INTO storeinfo ( no, shopname, localname, codename1, codename2, codename3, codename4, city, gu, dong )
+		VALUES ( #{no}, #{shopname}, #{localname}, #{codename1}, #{codename2}, #{codename3}, #{codename4}, #{city}, #{gu}, #{dong} )
+	</insert>
+
+	<!-- 상권 정보 갱신 -->
+	<update id="updateStoreInfo" parameterType="com.ssafy.happyhouse.model.dto.StoreInfo">
+		update storeinfo set shopname = #{shopname}
+		where no = #{no}
+	</update>
+
+	<!-- 상권 식별번호로 삭제 -->
+	<delete id="deleteStoreInfo" parameterType="int">
+		delete from storeinfo where no = #{no}
+	</delete>
+
+	<!-- 상권 식별번호로 조회 -->
+	<select id="searchDetail" parameterType="int" resultType="com.ssafy.happyhouse.model.dto.StoreInfo">
+		select * from StoreInfo where no = #{no}
+	</select>
+	
+	<!-- 관심지역으로 조회 -->
+	<select id="search" parameterType="String" resultType="com.ssafy.happyhouse.model.dto.StoreInfo">
+		select * from storeinfo where dong = #{dong}
+	</select>
+	
+	<!-- 대분류, 중분류, 소분류로 조회 -->
+	<select id="searchAllByCodeName" parameterType="map" resultType="com.ssafy.happyhouse.model.dto.StoreInfo">
+		select * from storeinfo 
+		where codename1 = #{codename1} and codename2 = #{codename2} and codename3 = #{codename3}
+	</select>
+	
+	<!-- 검색 조건에 해당하는 상권목록리스트 조회 -->
+	<select id="searchAll" parameterType="map" resultType="com.ssafy.happyhouse.model.dto.StoreInfo">
+		select * from storeinfo 
+		where 1=1
+		<if test="dong!=null and !dong.equals('')">
+			and dong LIKE CONCAT('%',#{dong},'%')
+		</if>
+		<if test="shopname!=null and !shopname.equals('')">
+  			and shopname LIKE CONCAT('%',#{shopname},'%')
+		</if>
+  		
+  		limit 10 offset #{currentPage}
+	</select>
+	
+	<!-- 검색 조건에 해당하는 상권목록리스트 개수 -->
+	<select id="storeTotal" parameterType="map" resultType="int">
+		select count(*) from storeinfo 
+		where 1=1
+		<if test="dong!=null and !dong.equals('')">
+			and dong LIKE CONCAT('%',#{dong},'%')
+		</if>
+		<if test="shopname!=null and !shopname.equals('')">
+  			and shopname LIKE CONCAT('%',#{shopname},'%')
+		</if>
+	</select>
+
+</mapper>

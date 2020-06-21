@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.ssafy.happyhouse.mapper.ManagerMapper">
+	
+	<!-- get List -->
+	<select id="getList" resultType="com.ssafy.happyhouse.model.dto.Manager">
+		select no, uid, count, lastdate from manager
+	</select>
+	
+	<!-- delete -->
+	<delete id="delete" parameterType="string">
+		DELETE FROM MANAGER WHERE uid = #{uid}
+	</delete>
+	
+	<!-- set date -->
+	<update id="setDate" parameterType="map">
+		UPDATE manager SET count = #{count} , lastdate = now()
+		WHERE uid = #{uid}
+	</update>
+	
+	<!-- get count -->
+	<select id="getCount" parameterType="string" resultType="com.ssafy.happyhouse.model.dto.Manager">
+		SELECT count from manager WHERE uid = #{uid}
+	</select>
+	
+	<!-- reg data -->
+	<insert id="regData" parameterType="string">
+		INSERT INTO manager (uid, count,lastdate)
+		VALUES ( #{uid}, 0, now())
+	</insert>
+	 
+	<!-- get user data -->
+	<select id="getUserData" parameterType="com.ssafy.happyhouse.model.dto.UserPageBean" resultType="com.ssafy.happyhouse.model.dto.User">
+		select * from user 
+		
+		<if test="userPageBean.id != null">
+			where uid = #{userPageBean.id}
+		</if>
+	</select>
+	
+</mapper>

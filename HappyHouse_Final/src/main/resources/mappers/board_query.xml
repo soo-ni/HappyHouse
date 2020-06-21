@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.ssafy.happyhouse.mapper.BoardMapper">
+
+	<insert id="boardInsert" parameterType="com.ssafy.happyhouse.model.dto.BoardDto">
+		insert into board ( USER_SEQ, TITLE, CONTENT, REG_DT)
+		values ( #{userSeq}, #{title}, #{content}, now())
+	</insert>
+	
+	<update id="boardUpdate" parameterType="com.ssafy.happyhouse.model.dto.BoardDto">
+		update board set
+			title = #{title}, content = #{content}
+			where board_id = #{boardId}
+	</update>
+	
+	<delete id="boardDelete" parameterType="int">
+		delete from board
+		where board_id = #{boardId}
+	</delete>
+
+	<select id="boardList" parameterType="map" resultType="com.ssafy.happyhouse.model.dto.BoardDto">
+		 select BOARD_ID "boardId", USER_SEQ "userSeq", TITLE "title", CONTENT "content", REG_DT "regDt", READ_COUNT "readCount"
+		 from board
+		 order by board_id desc
+	</select>
+	
+	<select id="boardListPage" parameterType="map" resultType="com.ssafy.happyhouse.model.dto.BoardDto">
+		 select BOARD_ID "boardId", USER_SEQ "userSeq", TITLE "title", CONTENT "content", REG_DT "regDt", READ_COUNT "readCount"
+		 from board
+		 order by board_id desc
+		 limit #{limit} offset #{offset}
+	</select>
+	
+	<select id="boardListTotalCnt" resultType="int">
+		select count(*) from board
+	</select>
+	
+	<select id="boardListSearchWord" parameterType="map" resultType="com.ssafy.happyhouse.model.dto.BoardDto">
+		select BOARD_ID, USER_SEQ, TITLE, CONTENT, REG_DT, READ_COUNT
+		from board
+		where title like #{title}
+		order by board_id desc
+		limit #{limit} offset #{offset}
+	</select>
+	
+	<select id="boardListSearchWordTotalCnt" parameterType="string" resultType="int">
+		select count(*) from board where title like #{title}
+	</select>
+	
+	<select id="boardDetail" parameterType="int" resultType="com.ssafy.happyhouse.model.dto.BoardDto">
+		select BOARD_ID as boardID,
+		 USER_SEQ as userSeq,
+		  TITLE as title,
+		  CONTENT as content,
+		  REG_DT as regDt,
+		  READ_COUNT as readCount
+		from board
+		where board_id = #{boardId}
+	</select>
+	
+	<update id="boardUpdateReadCount" parameterType="int">
+		update board set read_count = read_count+1
+		where board_id = #{boardId};
+	</update>
+	
+</mapper>
